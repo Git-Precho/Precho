@@ -44,7 +44,7 @@ function QrCrossWord() {
       <Crossword onCrosswordCorrect={() => console.log('winner')} data={data} />
       </div>
 
-      <p>{winState}</p>
+      <p>{winState && 'We have a winner'}</p>
     </React.Fragment>
   );
 }
