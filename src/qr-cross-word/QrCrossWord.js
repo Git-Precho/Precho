@@ -1,9 +1,19 @@
 import React from "react";
+import './QrCrossWord.css'
 import {
   Link
 } from "react-router-dom";
+import BOTW from '../BOTW.jpg';
 import Crossword from '@jaredreisinger/react-crossword';
 import Header from '../components/header/header'
+
+import { ThemeProvider } from '@material-ui/styles';
+
+import { 
+  Container,
+  Row,
+  Col
+} from 'react-bootstrap'
 
 
 const data = {
@@ -29,23 +39,46 @@ const data = {
 
 const QrCrossWord = () => {
   let winState = false;
+
+  let crossWordRef = React.createRef();
   
   const success = () => {
     winState = true;
   }
 
+  Crossword.defaultProps  = {
+    theme: {
+      // textColor: 'white'
+    }
+  }
+
+  const theme = {
+    // textColor: 'rgb(255, 255, 255)',
+    // gridBackground: 'red'
+  };
+
   return (
     <div style={{backgroundColor: '#0500b0'}}>
       <Header />
 
+      <Container>
+        <Row>
+          <Col>
+            <a href="/"><img src={BOTW} className="header-logo" alt="logo" /></a>
+          </Col>
+          <Col>          
+            <div style={{width: "30%", paddingTop: '4%', paddingLeft: '4%'}}>
+              <ThemeProvider theme={theme}>
+                <Crossword ref ={crossWordRef} onCrosswordCorrect={() => console.log('winner')} data={data} />
+              </ThemeProvider>
+            </div>
 
 
-      <div style={{width: "30%", paddingTop: '4%', paddingLeft: '4%'}}>
-        <Crossword onCrosswordCorrect={() => console.log('winner')} data={data} />
-      </div>
+          </Col>
+        </Row>
+      </Container>
+      <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 
-      {winState && <p>We have a winner</p>}
-      Hello
     </div>
   );
 }

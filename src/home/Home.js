@@ -5,17 +5,29 @@ import {
 } from "react-router-dom";
 import Header from '../components/header/header'
 
+import {
+  Container,
+  Row,
+  Col,
+  Button
+} from 'react-bootstrap';
+
 function Home() {
   return (
     <div style={{backgroundColor: '#0500b0'}}>
       <Header />
 
-      <li style={{color: 'red'}}>
-        <Link style={{color: 'red'}} to="/mothers-day">Mother's Day</Link>
-      </li>
-      <li>
-        <Link style={{color: 'red'}} to="/develop">Develop Stage</Link>
-      </li>
+      <br/>
+
+      <p style={{color: 'white'}}>
+      Click here to take part in our Mother's Day competition
+      </p>
+      <Link to="/mothers-day">
+        <Button style={{marginLeft: '20px'}}>Boop</Button>
+      </Link>
+
+      <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+      <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 
 
     </div>
