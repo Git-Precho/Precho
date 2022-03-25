@@ -3,6 +3,7 @@ import {
   Link
 } from "react-router-dom";
 import Crossword from '@jaredreisinger/react-crossword';
+import Header from '../components/header/header'
 
 
 const data = {
@@ -24,28 +25,28 @@ const data = {
   },
 };
 
-let winState = false;
 
-const success = () => {
-  winState = true;
-}
 
-function QrCrossWord() {
+const QrCrossWord = () => {
+  let winState = false;
+  
+  const success = () => {
+    winState = true;
+  }
+
   return (
-    <React.Fragment>
-      Cross word right here
+    <div style={{backgroundColor: '#0500b0'}}>
+      <Header />
 
-      
-      <li>
-        <Link to="/">Home</Link>
-      </li>
 
-    <div style={{width: "30%"}}>
-      <Crossword onCrosswordCorrect={() => console.log('winner')} data={data} />
+
+      <div style={{width: "30%", paddingTop: '4%', paddingLeft: '4%'}}>
+        <Crossword onCrosswordCorrect={() => console.log('winner')} data={data} />
       </div>
 
-      <p>{winState && 'We have a winner'}</p>
-    </React.Fragment>
+      {winState && <p>We have a winner</p>}
+      Hello
+    </div>
   );
 }
 
