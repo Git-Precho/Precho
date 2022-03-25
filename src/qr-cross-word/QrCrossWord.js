@@ -64,7 +64,13 @@ const QrCrossWord = () => {
       <Container>
         <Row>
           <Col>
-            <a href="/"><img src={BOTW} className="header-logo" alt="logo" /></a>
+            <br/>
+            <h2 style={{color: 'white', textAlign: 'center'}}>2022 Mother's Day competition</h2>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <img src={BOTW} className="header-logo" alt="logo" />
           </Col>
           <Col>          
             <div style={{width: "30%", paddingTop: '4%', paddingLeft: '4%'}}>
