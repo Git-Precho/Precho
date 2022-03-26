@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import './QrCrossWord.css'
 import {
   Link
@@ -12,7 +12,7 @@ import { ThemeProvider } from '@material-ui/styles';
 import { send } from 'emailjs-com';
 
 
-import { 
+import {
   Container,
   Row,
   Col,
@@ -32,27 +32,33 @@ const data = {
     3: {
       clue: 'The kind of water used to cook spaghetti',
       answer: 'TROUBLED',
-      row: 2,
-      col: 4,
+      row: 10,
+      col: 8,
     },
     6: {
-      clue: 'Pocket filler',
+      clue: 'Poor pronunciation pocket filler',
       answer: 'MUMBLES',
       row: 0,
-      col: 4,
+      col: 2,
+    },
+    7: {
+      clue: 'When toddlers scoot down the kitchen in their toy car, they call them what kind of driver',
+      answer: 'BABY',
+      row: 6,
+      col: 5,
     }
   },
   down: {
     2: {
-      clue: 'What are snail jealous of',
+      clue: 'What are snails jealous of',
       answer: 'SPARROWS',
-      row: 3,
-      col: 8,
+      row: 5,
+      col: 10,
     },
     4: {
       clue: 'Confidence shaker',
       answer: 'CELIA',
-      row: 6,
+      row: 2,
       col: 6,
     },
     5: {
@@ -60,6 +66,12 @@ const data = {
       answer: 'UNSATISFIED',
       row: 0,
       col: 3,
+    },
+    8: {
+      clue: 'Who gets their plane right on time',
+      answer: 'TOM',
+      row: 10,
+      col: 8,
     }
   },
 };
@@ -70,12 +82,20 @@ const QrCrossWord = () => {
   const [win, setWin] = useState(false);
   const [show, setShow] = useState(false);
   // let winState = false;
-  const [toName, setToName] = useState('')
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('')
+
   const [emailSuccess, setEmailSuccess] = useState(false);
 
   let crossWordRef = React.createRef();
+
+  useEffect(() => {
+    crossWordRef.current.reset();
+    console.log('RESET!')
+  }, [])
+
   let bam = () => console.log(crossWordRef.isCrosswordCorrect());
-  
+
   const success = () => {
     !win && setShow(true);
     console.log(win);
@@ -83,11 +103,10 @@ const QrCrossWord = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    {/* --- METHOD TO SEND THE MAIL --- */}
+    {/* --- METHOD TO SEND THE MAIL --- */ }
     let toSend = {
-      first_name: 'Ste',
-      email: toName,
-      message: 'it works'
+      first_name: name,
+      email: email
     }
     send(
       'service_a36onn9',
@@ -104,11 +123,15 @@ const QrCrossWord = () => {
       });
   };
 
-  const handleChange = (e) => {
-    setToName(e.target.value);
+  const handleNameChange = (e) => {
+    setName(e.target.value);
   };
 
-  Crossword.defaultProps  = {
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+
+  Crossword.defaultProps = {
     theme: {
       highlightBackground: 'red',
       focusBackground: 'cyan'
@@ -121,54 +144,73 @@ const QrCrossWord = () => {
   };
 
   return (
-    <div style={{backgroundColor: '#0500b0'}}>
+    <div style={{ backgroundColor: '#0500b0' }}>
       <Header />
 
       <Modal
-              show={show}
-              onShow={() => setWin(true)}
-              onHide={() => setShow(false)}   
-            >
-              <Modal.Body> 
-                <p>
-                  You won!!!
+        show={show}
+        onShow={() => setWin(true)}
+        onHide={() => setShow(false)}
+      >
+        <Modal.Body>
+          <p>
+            You won!!!
 
-                  <br/><br/>
+                  <br /><br />
 
-                  To sumbit your entry, please enter your email below:
+                  To sumbit your entry, please enter your name & email below:
                 </p>
-                <input
-                    type='text'
-                    name='to_name'
-                    placeholder='email here please'
-                    value={toName}
-                    onChange={handleChange}
-                ></input>
-                <Button onClick={onSubmit}>Submit</Button>
-                {emailSuccess && <p>Ta</p>}
-              </Modal.Body>
-            </Modal>
-            
+          <input
+            type='text'
+            name='first_name'
+            placeholder='first name'
+            value={name}
+            onChange={handleNameChange}
+          ></input>
+          <br/><br/>
+          <input
+            type='text'
+            name='email'
+            placeholder='email'
+            value={email}
+            onChange={handleEmailChange}
+          ></input>
+          <br/><br/>
+          {!emailSuccess && <Button disable={emailSuccess} onClick={onSubmit}>Submit</Button>}
+          {emailSuccess && <Button onClick={() => setShow(false)}>Close</Button>}
+          <br/><br/>
+          {emailSuccess && <p>Entry submission successful, check your email to verfy</p>}
+        </Modal.Body>
+      </Modal>
+
       <Container>
         <Row>
           <Col>
-            <br/>
-            <h2 style={{color: 'white', textAlign: 'center'}}>2022 Mother's Day competition</h2>
+            <br />
+            <h2 style={{ color: 'white', textAlign: 'center' }}>2022 Mother's Day competition</h2>
             <Button onClick={() => console.log(crossWordRef.current.isCrosswordCorrect())}>Correct?</Button>
             <Button onClick={() => console.log(crossWordRef.current.fillAllAnswers())}>Correct!</Button>
             <Button onClick={() => console.log(crossWordRef.current.reset())}>Reset</Button>
           </Col>
         </Row>
         <Row>
-          <Col>
-            <img src={BOTW} className="s-n-g-pic" alt="logo" />
-            <br/><br/>
-            <p style={{color: 'white'}}>
-              Successfully solve the crossword in order to submit your entry
+          <Col sm={12} md={6}>
+            <br/>
+            <div style={{textAlign: 'center'}}>
+              <img src={BOTW} className="s-n-g-pic" alt="logo" />
+            </div>
+            <br />
+            <p style={{ color: 'white', width: '90%', marginLeft: '5%' }}>
+              Successfully solve the crossword in order to be in for a chance at winning Simon & Garfunkel's <em><b>Bridge Over Troubled Water</b></em>
+              <br/><br/>
+              As a tip, the clues are often associated with lyrics from the album
+              <br/><br/>
+              Good luck!
+              <br/><br/><br/>
             </p>
           </Col>
-          <Col>          
-            <div style={{width: "60%", paddingTop: '4%', paddingLeft: '4%'}}>
+          <Col sm={12} md={6}>
+            <div style={{ width: "95%", paddingTop: '4%', paddingLeft: '4%' }}>
               <ThemeProvider theme={theme}>
                 <Crossword ref={crossWordRef} onCrosswordCorrect={() => success()} data={data} />
               </ThemeProvider>
@@ -180,7 +222,7 @@ const QrCrossWord = () => {
           </Col>
         </Row>
       </Container>
-      <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
 
     </div>
   );
