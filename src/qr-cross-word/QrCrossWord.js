@@ -71,6 +71,7 @@ const QrCrossWord = () => {
   const [show, setShow] = useState(false);
   // let winState = false;
   const [toName, setToName] = useState('')
+  const [emailSuccess, setEmailSuccess] = useState(false);
 
   let crossWordRef = React.createRef();
   let bam = () => console.log(crossWordRef.isCrosswordCorrect());
@@ -96,6 +97,7 @@ const QrCrossWord = () => {
     )
       .then((response) => {
         console.log('SUCCESS!', response.status, response.text);
+        setEmailSuccess(true);
       })
       .catch((err) => {
         console.log('FAILED...', err);
@@ -143,6 +145,7 @@ const QrCrossWord = () => {
                     onChange={handleChange}
                 ></input>
                 <Button onClick={onSubmit}>Submit</Button>
+                {emailSuccess && <p>Ta</p>}
               </Modal.Body>
             </Modal>
             
