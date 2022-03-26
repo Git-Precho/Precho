@@ -6,3 +6,11 @@ h3.header {
 .clue {
   color: rgb(255, 255, 255)
 }
+
+.grid {
+  border: 5px solid red;
+}
+
+.s-n-g-pic {
+  width: 333px;
+}
