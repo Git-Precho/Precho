@@ -139,7 +139,7 @@ const QrCrossWord = () => {
 
   Crossword.defaultProps = {
     theme: {
-      highlightBackground: 'blue',
+      highlightBackground: 'royalblue',
       // focusBackground: 'blue',
       // cellBackground: 'pink',
       numberColor: 'black'
@@ -197,9 +197,9 @@ const QrCrossWord = () => {
           <Col>
             <br />
             <h2 style={{ color: 'white', textAlign: 'center' }}>2022 Mother's Day competition</h2>
-            <Button onClick={() => console.log(crossWordRef.current.isCrosswordCorrect())}>Correct?</Button>
+            {/* <Button onClick={() => console.log(crossWordRef.current.isCrosswordCorrect())}>Correct?</Button>
             <Button onClick={() => console.log(crossWordRef.current.fillAllAnswers())}>Correct!</Button>
-            <Button onClick={() => console.log(crossWordRef.current.reset())}>Reset</Button>
+            <Button onClick={() => console.log(crossWordRef.current.reset())}>Reset</Button> */}
           </Col>
         </Row>
         <Row>
@@ -212,7 +212,7 @@ const QrCrossWord = () => {
             <p style={{ color: 'white', width: '90%', marginLeft: '5%' }}>
               Successfully solve the crossword in order to be in for a chance at winning Simon & Garfunkel's <em><b>Bridge Over Troubled Water</b></em>
               <br/><br/>
-              As a tip, the clues are often associated with lyrics from the album
+              As a tip, the clues are often associated with lyrics from the album. Typing in answers can be made more convenient by clicking on each clue
               <br/><br/>
               Good luck!
               <br/><br/><br/>
