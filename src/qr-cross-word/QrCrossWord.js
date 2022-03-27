@@ -97,7 +97,7 @@ const QrCrossWord = () => {
     console.log('RESET!')
   }, [])
 
-  let bam = () => console.log(crossWordRef.isCrosswordCorrect());
+  // let bam = () => console.log(crossWordRef.isCrosswordCorrect());
 
   const success = () => {
     !win && setShow(true);
