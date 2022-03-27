@@ -17,7 +17,8 @@ import {
   Row,
   Col,
   Button,
-  Modal
+  Modal,
+  Spinner
 } from 'react-bootstrap'
 
 
@@ -87,6 +88,8 @@ const QrCrossWord = () => {
 
   const [emailSuccess, setEmailSuccess] = useState(false);
 
+  const [loading, setLoading] = useState(false);
+
   let crossWordRef = React.createRef();
 
   useEffect(() => {
@@ -104,6 +107,7 @@ const QrCrossWord = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     {/* --- METHOD TO SEND THE MAIL --- */ }
+    setLoading(true);
     let toSend = {
       first_name: name,
       email: email
@@ -116,10 +120,12 @@ const QrCrossWord = () => {
     )
       .then((response) => {
         console.log('SUCCESS!', response.status, response.text);
+        setLoading(false);
         setEmailSuccess(true);
       })
       .catch((err) => {
         console.log('FAILED...', err);
+        setLoading(false);
       });
   };
 
@@ -133,8 +139,10 @@ const QrCrossWord = () => {
 
   Crossword.defaultProps = {
     theme: {
-      highlightBackground: 'red',
-      focusBackground: 'cyan'
+      highlightBackground: 'blue',
+      // focusBackground: 'blue',
+      // cellBackground: 'pink',
+      numberColor: 'black'
     }
   }
 
@@ -176,7 +184,8 @@ const QrCrossWord = () => {
             onChange={handleEmailChange}
           ></input>
           <br/><br/>
-          {!emailSuccess && <Button disable={emailSuccess} onClick={onSubmit}>Submit</Button>}
+          {!emailSuccess && !loading && <Button disable={emailSuccess} onClick={onSubmit}>Submit</Button>}
+          {!emailSuccess && loading && <Button><Spinner animation="border" /></Button>}
           {emailSuccess && <Button onClick={() => setShow(false)}>Close</Button>}
           <br/><br/>
           {emailSuccess && <p>Entry submission successful, check your email to verfy</p>}
@@ -207,6 +216,7 @@ const QrCrossWord = () => {
               <br/><br/>
               Good luck!
               <br/><br/><br/>
+              {win && !emailSuccess && <Button onClick={() => setShow(true)}>Open submit panel</Button>}
             </p>
           </Col>
           <Col sm={12} md={6}>
